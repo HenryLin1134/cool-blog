@@ -8,7 +8,7 @@
 // ============================================
 let currentTheme = localStorage.getItem("theme") || "light";
 let typingIndex = 0;
-let typingNames = ["開發者", "設計師", "創作者", "學習者"]; // 將被 i18n 更新
+let typingNames = ["開發者", "設計師", "創作者", "學習者"];
 let currentNameIndex = 0;
 
 // API 配置
@@ -302,14 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
 async function initializeApp() {
   // 初始化主題
   initTheme();
-
-  // 初始化多語系
-  if (typeof initLanguageSelector === 'function') {
-    initLanguageSelector();
-    updatePageLanguage();
-    // 更新打字動畫文字為當前語言
-    typingNames = t('hero.typingText');
-  }
 
   // 初始化導航
   initNavigation();

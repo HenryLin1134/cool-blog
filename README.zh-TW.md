@@ -108,10 +108,10 @@ npm start
 
 ### 存取應用程式
 
-| 應用程式 | 網址 | 說明 |
-| -------- | ---- | ---- |
-| 🌐 前端 | http://localhost:3001 | 公開部落格網站 |
-| ✏️ 管理 | http://localhost:3001/admin.html | 文章管理 |
+| 應用程式 | 網址                             | 說明           |
+| -------- | -------------------------------- | -------------- |
+| 🌐 前端  | http://localhost:3001            | 公開部落格網站 |
+| ✏️ 管理  | http://localhost:3001/admin.html | 文章管理       |
 
 ---
 
@@ -160,26 +160,26 @@ DELETE /api/articles/:id   # 刪除文章
 #### 取得所有文章
 
 ```javascript
-fetch('http://localhost:3001/api/articles')
-  .then(response => response.json())
-  .then(data => console.log(data));
+fetch("http://localhost:3001/api/articles")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
 ```
 
 #### 建立新文章
 
 ```javascript
-fetch('http://localhost:3001/api/articles', {
-  method: 'POST',
+fetch("http://localhost:3001/api/articles", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    title: '我的新文章',
-    category: '技術',
-    excerpt: '這是一篇關於...',
-    content: '<p>文章內容...</p>',
-    tags: ['JavaScript', 'Node.js']
-  })
+    title: "我的新文章",
+    category: "技術",
+    excerpt: "這是一篇關於...",
+    content: "<p>文章內容...</p>",
+    tags: ["JavaScript", "Node.js"],
+  }),
 });
 ```
 
@@ -260,16 +260,18 @@ fetch('http://localhost:3001/api/articles', {
 
 ```javascript
 const PORT = process.env.PORT || 3001;
-const DATA_FILE = './data/articles.json';
+const DATA_FILE = "./data/articles.json";
 ```
 
 ### CORS 設定
 
 ```javascript
-app.use(cors({
-  origin: '*', // 生產環境中應限制來源
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
-}));
+app.use(
+  cors({
+    origin: "*", // 生產環境中應限制來源
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  }),
+);
 ```
 
 ---
@@ -299,15 +301,15 @@ app.use(cors({
 
 ## 📈 專案統計
 
-| 指標 | 數值 |
-|------|------|
-| 總程式碼行數 | 3,000+ |
-| HTML 行數 | 480 |
-| CSS 行數 | 1,591 |
-| JavaScript 行數 | 877 |
-| 建立的檔案 | 15+ |
-| API 端點 | 5 |
-| 預載文章 | 6 |
+| 指標            | 數值   |
+| --------------- | ------ |
+| 總程式碼行數    | 3,000+ |
+| HTML 行數       | 480    |
+| CSS 行數        | 1,591  |
+| JavaScript 行數 | 877    |
+| 建立的檔案      | 15+    |
+| API 端點        | 5      |
+| 預載文章        | 6      |
 
 ---
 
