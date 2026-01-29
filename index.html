@@ -39,11 +39,22 @@
           <span></span>
         </button>
         <ul class="nav-menu" id="navMenu">
-          <li><a href="#home" class="nav-link active">首頁</a></li>
-          <li><a href="#about" class="nav-link">關於我</a></li>
-          <li><a href="#blog" class="nav-link">部落格</a></li>
-          <li><a href="#projects" class="nav-link">作品集</a></li>
-          <li><a href="#contact" class="nav-link">聯絡</a></li>
+          <li><a href="#home" class="nav-link active nav.home">首頁</a></li>
+          <li><a href="#about" class="nav-link nav.about">關於我</a></li>
+          <li><a href="#blog" class="nav-link nav.blog">部落格</a></li>
+          <li><a href="#projects" class="nav-link nav.projects">作品集</a></li>
+          <li><a href="#contact" class="nav-link nav.contact">聯絡</a></li>
+          <li>
+            <select
+              class="language-selector"
+              id="languageSelector"
+              aria-label="選擇語言"
+            >
+              <option value="zh-TW">🇹🇼 繁中</option>
+              <option value="en">🇺🇸 EN</option>
+              <option value="ja">🇯🇵 日本語</option>
+            </select>
+          </li>
           <li>
             <button
               class="theme-toggle"
@@ -474,6 +485,7 @@
       <span>↑</span>
     </button>
 
+    <script src="js/i18n.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
