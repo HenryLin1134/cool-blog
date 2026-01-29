@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="一個很酷的個人部落格 - 分享技術、生活與創意"
+    />
+    <meta name="author" content="Your Name" />
+    <title>Cool Blog - 我的酷炫部落格</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 頁面載入動畫 -->
+    <div id="preloader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- 導航欄 -->
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <span class="logo">🚀 Cool Blog</span>
+        </div>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home" class="nav-link active">首頁</a></li>
+          <li><a href="#about" class="nav-link">關於我</a></li>
+          <li><a href="#blog" class="nav-link">部落格</a></li>
+          <li><a href="#projects" class="nav-link">作品集</a></li>
+          <li><a href="#contact" class="nav-link">聯絡</a></li>
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+            >
+              <span class="theme-icon">🌙</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero 區塊 -->
+    <section id="home" class="hero">
+      <div class="hero-background">
+        <div class="gradient-bg"></div>
+        <div class="particles" id="particles"></div>
+      </div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="wave">👋</span> 嗨！我是
+            <span class="gradient-text typing-text" id="typingText"></span>
+          </h1>
+          <p class="hero-subtitle">全端開發者 | 設計愛好者 | 終身學習者</p>
+          <p class="hero-description">
+            專注於創造美觀、高效且用戶友好的網頁應用程式。
+            熱愛探索新技術，分享知識與經驗。
+          </p>
+          <div class="hero-buttons">
+            <a href="#blog" class="btn btn-primary">
+              <span>探索文章</span>
+              <span class="btn-arrow">→</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>聯絡我</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="avatar-container">
+            <div class="avatar-ring"></div>
+            <div class="avatar">
+              <span class="avatar-emoji">💻</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <span class="mouse">
+          <span class="wheel"></span>
+        </span>
+        <p>向下滾動</p>
+      </div>
+    </section>
+
+    <!-- 關於我 -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">關於我</h2>
+          <p class="section-subtitle">熱情 | 創新 | 追求卓越</p>
+        </div>
+        <div class="about-content">
+          <div class="about-card">
+            <div class="card-icon">🎯</div>
+            <h3>我的使命</h3>
+            <p>透過程式碼創造價值，用技術解決實際問題，讓世界變得更美好。</p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon">💡</div>
+            <h3>我的理念</h3>
+            <p>
+              保持好奇心，永不停止學習。相信技術可以改變生活，設計能傳遞情感。
+            </p>
+          </div>
+          <div class="about-card">
+            <div class="card-icon">🚀</div>
+            <h3>我的目標</h3>
+            <p>成為一名優秀的全端開發者，打造令人驚艷的產品，影響更多人。</p>
+          </div>
+        </div>
+        <div class="skills-section">
+          <h3 class="skills-title">技能專長</h3>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <div class="skill-icon">🎨</div>
+              <div class="skill-info">
+                <h4>前端開發</h4>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="--progress: 90%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">⚙️</div>
+              <div class="skill-info">
+                <h4>後端開發</h4>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="--progress: 85%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">📱</div>
+              <div class="skill-info">
+                <h4>UI/UX 設計</h4>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="--progress: 80%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">☁️</div>
+              <div class="skill-info">
+                <h4>雲端服務</h4>
+                <div class="skill-bar">
+                  <div class="skill-progress" style="--progress: 75%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 部落格 -->
+    <section id="blog" class="blog">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">最新文章</h2>
+          <p class="section-subtitle">分享技術心得與生活感悟</p>
+        </div>
+        <div class="blog-grid" id="blogGrid">
+          <!-- 文章卡片將由 JavaScript 動態生成 -->
+        </div>
+        <div class="blog-pagination">
+          <button class="btn btn-outline" id="loadMoreBtn">載入更多文章</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 文章詳細 Modal -->
+    <div id="articleModal" class="article-modal">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="closeModal" aria-label="關閉">
+          <span>✕</span>
+        </button>
+        <div class="modal-body">
+          <article class="article-content">
+            <header class="article-header">
+              <div class="article-meta">
+                <span class="article-category" id="articleCategory"></span>
+                <span class="article-date" id="articleDate"></span>
+                <span class="article-readtime" id="articleReadtime"></span>
+              </div>
+              <h1 class="article-title" id="articleTitle"></h1>
+              <div class="article-tags" id="articleTags"></div>
+            </header>
+            <div class="article-body" id="articleBody">
+              <!-- 文章內容將由 JavaScript 動態生成 -->
+            </div>
+            <footer class="article-footer">
+              <div class="article-share">
+                <h3>分享這篇文章</h3>
+                <div class="share-buttons">
+                  <button class="share-btn" aria-label="分享到 Twitter">
+                    <span>🐦</span>
+                    <span>Twitter</span>
+                  </button>
+                  <button class="share-btn" aria-label="分享到 Facebook">
+                    <span>📘</span>
+                    <span>Facebook</span>
+                  </button>
+                  <button class="share-btn" aria-label="分享到 LinkedIn">
+                    <span>💼</span>
+                    <span>LinkedIn</span>
+                  </button>
+                  <button
+                    class="share-btn"
+                    id="copyLinkBtn"
+                    aria-label="複製連結"
+                  >
+                    <span>🔗</span>
+                    <span>複製連結</span>
+                  </button>
+                </div>
+              </div>
+              <div class="article-navigation">
+                <button
+                  class="nav-article prev-article"
+                  id="prevArticle"
+                  style="display: none"
+                >
+                  <span class="nav-label">← 上一篇</span>
+                  <span class="nav-title"></span>
+                </button>
+                <button
+                  class="nav-article next-article"
+                  id="nextArticle"
+                  style="display: none"
+                >
+                  <span class="nav-label">下一篇 →</span>
+                  <span class="nav-title"></span>
+                </button>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 作品集 -->
+    <section id="projects" class="projects">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">精選作品</h2>
+          <p class="section-subtitle">用心打造的專案</p>
+        </div>
+        <div class="projects-grid">
+          <div class="project-card" data-category="web">
+            <div class="project-image">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="#" class="project-link" aria-label="View demo">
+                    <span>🔗</span>
+                  </a>
+                  <a href="#" class="project-link" aria-label="View code">
+                    <span>💻</span>
+                  </a>
+                </div>
+              </div>
+              <div class="project-placeholder">
+                <span class="placeholder-icon">🌐</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tags">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+              </div>
+              <h3>電商平台</h3>
+              <p>
+                功能完整的線上購物平台，包含商品管理、購物車、訂單系統等功能。
+              </p>
+            </div>
+          </div>
+          <div class="project-card" data-category="app">
+            <div class="project-image">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="#" class="project-link" aria-label="View demo">
+                    <span>🔗</span>
+                  </a>
+                  <a href="#" class="project-link" aria-label="View code">
+                    <span>💻</span>
+                  </a>
+                </div>
+              </div>
+              <div class="project-placeholder">
+                <span class="placeholder-icon">📱</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tags">
+                <span class="tag">Flutter</span>
+                <span class="tag">Firebase</span>
+              </div>
+              <h3>任務管理 App</h3>
+              <p>簡潔易用的任務管理應用，支援雲端同步與多人協作。</p>
+            </div>
+          </div>
+          <div class="project-card" data-category="design">
+            <div class="project-image">
+              <div class="project-overlay">
+                <div class="project-links">
+                  <a href="#" class="project-link" aria-label="View demo">
+                    <span>🔗</span>
+                  </a>
+                  <a href="#" class="project-link" aria-label="View code">
+                    <span>💻</span>
+                  </a>
+                </div>
+              </div>
+              <div class="project-placeholder">
+                <span class="placeholder-icon">🎨</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <div class="project-tags">
+                <span class="tag">UI/UX</span>
+                <span class="tag">Figma</span>
+              </div>
+              <h3>設計系統</h3>
+              <p>為企業打造的完整設計系統，包含組件庫、設計規範與文檔。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯絡區塊 -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">保持聯繫</h2>
+          <p class="section-subtitle">很樂意與你交流</p>
+        </div>
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">📧</div>
+              <div class="contact-details">
+                <h4>Email</h4>
+                <a href="mailto:your.email@example.com"
+                  >your.email@example.com</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🐙</div>
+              <div class="contact-details">
+                <h4>GitHub</h4>
+                <a href="https://github.com/yourusername" target="_blank"
+                  >@yourusername</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">💼</div>
+              <div class="contact-details">
+                <h4>LinkedIn</h4>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank"
+                  >你的名字</a
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🐦</div>
+              <div class="contact-details">
+                <h4>Twitter</h4>
+                <a href="https://twitter.com/yourusername" target="_blank"
+                  >@yourusername</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="contact-form">
+            <form id="contactForm">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="你的名字"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="你的 Email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="想說的話..."
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                <span>發送訊息</span>
+                <span class="btn-arrow">→</span>
+              </button>
+            </form>
+            <div id="formMessage" class="form-message"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h3>🚀 Cool Blog</h3>
+            <p>用心創造，用愛分享</p>
+          </div>
+          <div class="footer-links">
+            <div class="footer-column">
+              <h4>快速連結</h4>
+              <ul>
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#about">關於我</a></li>
+                <li><a href="#blog">部落格</a></li>
+                <li><a href="#projects">作品集</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>社群媒體</h4>
+              <ul>
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Cool Blog. 用 ❤️ 與 ☕ 打造</p>
+          <p class="footer-tech">使用 HTML, CSS, JavaScript 構建</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 回到頂部按鈕 -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+      <span>↑</span>
+    </button>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

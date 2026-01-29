@@ -1,0 +1,10 @@
+node_modules/
+package-lock.json
+.env
+.env.local
+.DS_Store
+*.log
+data/articles.json
+
+# Ignore other project in workspace
+../my_personal_blog/

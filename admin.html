@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cool Blog - 後台編輯器</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", "Noto Sans TC", sans-serif;
+        background: #0f172a;
+        color: #f1f5f9;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* 頂部導航 */
+      .navbar {
+        background: #1e293b;
+        border-bottom: 1px solid #334155;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .navbar-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .navbar h1 {
+        font-size: 1.5rem;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #764ba2);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px rgba(99, 102, 241, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #cbd5e1;
+        border: 1px solid #334155;
+      }
+
+      .btn-secondary:hover {
+        background: #334155;
+      }
+
+      .btn-danger {
+        background: #ef4444;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background: #dc2626;
+      }
+
+      /* 主容器 */
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+        padding: 2rem 0;
+      }
+
+      .panel {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+      }
+
+      .panel-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #334155;
+      }
+
+      /* 文章列表 */
+      .articles-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+
+      .article-item {
+        padding: 1rem;
+        background: #334155;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        border-left: 3px solid transparent;
+      }
+
+      .article-item:hover {
+        background: #475569;
+        border-left-color: #6366f1;
+      }
+
+      .article-item.active {
+        background: #6366f1;
+        border-left-color: #818cf8;
+      }
+
+      .article-item-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .article-item-meta {
+        font-size: 0.75rem;
+        color: #94a3b8;
+      }
+
+      /* 編輯表單 */
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #cbd5e1;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        background: #334155;
+        border: 1px solid #475569;
+        border-radius: 0.5rem;
+        color: #f1f5f9;
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #6366f1;
+        background: #475569;
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 200px;
+      }
+
+      .tag-input {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        padding: 0.5rem;
+        background: #334155;
+        border: 1px solid #475569;
+        border-radius: 0.5rem;
+        min-height: 45px;
+      }
+
+      .tag {
+        background: #6366f1;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .tag-remove {
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0;
+      }
+
+      .tag-input input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        min-width: 100px;
+      }
+
+      .form-buttons {
+        display: flex;
+        gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #334155;
+      }
+
+      .form-buttons .btn {
+        flex: 1;
+      }
+
+      /* 內容編輯器 */
+      .editor-toolbar {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        padding: 1rem;
+        background: #334155;
+        border-radius: 0.5rem;
+      }
+
+      .editor-btn {
+        padding: 0.5rem 0.75rem;
+        background: #475569;
+        border: 1px solid #64748b;
+        color: #cbd5e1;
+        border-radius: 0.35rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+      }
+
+      .editor-btn:hover {
+        background: #64748b;
+      }
+
+      /* 消息提示 */
+      .message {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        animation: slideDown 0.3s;
+      }
+
+      .message.success {
+        background: #10b981;
+        color: white;
+      }
+
+      .message.error {
+        background: #ef4444;
+        color: white;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* 空狀態 */
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #94a3b8;
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      /* 響應式 */
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .articles-list {
+          max-height: 300px;
+        }
+
+        .editor-toolbar {
+          flex-direction: column;
+        }
+
+        .form-buttons {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 頂部導航 -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-content">
+          <h1>🚀 Cool Blog 後台編輯器</h1>
+          <div class="nav-buttons">
+            <a href="index.html" class="btn btn-secondary">← 返回前台</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container" style="padding-top: 2rem">
+      <!-- 消息提示 -->
+      <div id="messageBox"></div>
+
+      <div class="main-content">
+        <!-- 左側：文章列表 -->
+        <div>
+          <div class="panel">
+            <div class="panel-title">文章列表</div>
+            <button
+              class="btn btn-primary"
+              style="width: 100%; margin-bottom: 1rem"
+              onclick="createNewArticle()"
+            >
+              ➕ 新增文章
+            </button>
+            <div class="articles-list" id="articlesList"></div>
+          </div>
+        </div>
+
+        <!-- 右側：編輯表單 -->
+        <div>
+          <div class="panel">
+            <div class="panel-title">編輯文章</div>
+            <div id="emptyState" class="empty-state">
+              <div class="empty-state-icon">📝</div>
+              <p>選擇一篇文章或建立新的文章</p>
+            </div>
+            <form id="editForm" style="display: none">
+              <div class="form-group">
+                <label>標題</label>
+                <input type="text" id="title" required />
+              </div>
+
+              <div class="form-group">
+                <label>分類</label>
+                <select id="category" required>
+                  <option value="">選擇分類</option>
+                  <option value="技術">技術</option>
+                  <option value="教學">教學</option>
+                  <option value="分享">分享</option>
+                  <option value="新聞">新聞</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>摘要</label>
+                <textarea
+                  id="excerpt"
+                  required
+                  placeholder="文章簡短描述..."
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>發布日期</label>
+                <input type="date" id="date" required />
+              </div>
+
+              <div class="form-group">
+                <label>閱讀時間</label>
+                <input type="text" id="readTime" placeholder="例：8 分鐘" />
+              </div>
+
+              <div class="form-group">
+                <label>標籤</label>
+                <div class="tag-input" id="tagsInput">
+                  <input
+                    type="text"
+                    id="tagInput"
+                    placeholder="輸入標籤後按 Enter..."
+                    onkeypress="handleTagInput(event)"
+                  />
+                </div>
+                <input type="hidden" id="tags" />
+              </div>
+
+              <div class="form-group">
+                <label>文章內容 (HTML)</label>
+                <div class="editor-toolbar">
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<h2>', '</h2>')"
+                  >
+                    標題2
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<h3>', '</h3>')"
+                  >
+                    標題3
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<p>', '</p>')"
+                  >
+                    段落
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<ul><li>', '</li></ul>')"
+                  >
+                    列表
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<blockquote>', '</blockquote>')"
+                  >
+                    引用
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<code>', '</code>')"
+                  >
+                    代碼
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<strong>', '</strong>')"
+                  >
+                    加粗
+                  </button>
+                  <button
+                    type="button"
+                    class="editor-btn"
+                    onclick="insertTag('<em>', '</em>')"
+                  >
+                    斜體
+                  </button>
+                </div>
+                <textarea
+                  id="content"
+                  required
+                  placeholder="輸入 HTML 格式的文章內容..."
+                ></textarea>
+              </div>
+
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">💾 保存</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="resetForm()"
+                >
+                  🔄 重置
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  id="deleteBtn"
+                  style="display: none"
+                  onclick="deleteArticle()"
+                >
+                  🗑️ 刪除
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:3001/api";
+      let currentArticle = null;
+      let allArticles = [];
+
+      // 初始化
+      async function init() {
+        await loadArticles();
+      }
+
+      // 載入文章列表
+      async function loadArticles() {
+        try {
+          const response = await fetch(`${API_URL}/articles`);
+          const result = await response.json();
+
+          if (result.success) {
+            allArticles = result.data;
+            renderArticlesList();
+          }
+        } catch (error) {
+          console.error("載入文章失敗:", error);
+          showMessage("無法連接到後端服務器，請確保服務器正在運行", "error");
+        }
+      }
+
+      // 渲染文章列表
+      function renderArticlesList() {
+        const list = document.getElementById("articlesList");
+
+        if (allArticles.length === 0) {
+          list.innerHTML = '<div class="empty-state"><p>尚無文章</p></div>';
+          return;
+        }
+
+        list.innerHTML = allArticles
+          .map(
+            (article) => `
+                <div class="article-item ${currentArticle?.id === article.id ? "active" : ""}" onclick="editArticle(${article.id})">
+                    <div class="article-item-title">${article.title}</div>
+                    <div class="article-item-meta">
+                        ${article.date} • ${article.readTime}
+                    </div>
+                </div>
+            `,
+          )
+          .join("");
+      }
+
+      // 建立新文章
+      function createNewArticle() {
+        currentArticle = null;
+        resetForm();
+        document.getElementById("editForm").style.display = "block";
+        document.getElementById("emptyState").style.display = "none";
+        document.getElementById("deleteBtn").style.display = "none";
+
+        // 設置今天的日期
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("date").value = today;
+
+        renderArticlesList();
+      }
+
+      // 編輯文章
+      function editArticle(id) {
+        currentArticle = allArticles.find((a) => a.id === id);
+        if (!currentArticle) return;
+
+        document.getElementById("title").value = currentArticle.title;
+        document.getElementById("category").value = currentArticle.category;
+        document.getElementById("excerpt").value = currentArticle.excerpt;
+        document.getElementById("date").value = currentArticle.date;
+        document.getElementById("readTime").value = currentArticle.readTime;
+        document.getElementById("content").value = currentArticle.content;
+        document.getElementById("tags").value = JSON.stringify(
+          currentArticle.tags,
+        );
+
+        // 更新標籤顯示
+        const tagsInput = document.getElementById("tagsInput");
+        tagsInput.innerHTML = `
+                ${currentArticle.tags
+                  .map(
+                    (tag) => `
+                    <span class="tag">
+                        ${tag}
+                        <button type="button" class="tag-remove" onclick="removeTag('${tag}')">✕</button>
+                    </span>
+                `,
+                  )
+                  .join("")}
+                <input type="text" id="tagInput" placeholder="輸入標籤後按 Enter..." onkeypress="handleTagInput(event)">
+            `;
+
+        document.getElementById("editForm").style.display = "block";
+        document.getElementById("emptyState").style.display = "none";
+        document.getElementById("deleteBtn").style.display = "block";
+
+        renderArticlesList();
+      }
+
+      // 處理標籤輸入
+      function handleTagInput(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          const input = event.target;
+          const tag = input.value.trim();
+
+          if (tag) {
+            const tags = JSON.parse(
+              document.getElementById("tags").value || "[]",
+            );
+            if (!tags.includes(tag)) {
+              tags.push(tag);
+              document.getElementById("tags").value = JSON.stringify(tags);
+
+              const tagsInput = document.getElementById("tagsInput");
+              const newTag = document.createElement("span");
+              newTag.className = "tag";
+              newTag.innerHTML = `
+                            ${tag}
+                            <button type="button" class="tag-remove" onclick="removeTag('${tag}')">✕</button>
+                        `;
+              tagsInput.insertBefore(newTag, input);
+            }
+            input.value = "";
+          }
+        }
+      }
+
+      // 移除標籤
+      function removeTag(tag) {
+        const tags = JSON.parse(document.getElementById("tags").value || "[]");
+        const newTags = tags.filter((t) => t !== tag);
+        document.getElementById("tags").value = JSON.stringify(newTags);
+
+        // 重新渲染標籤
+        const currentTags = JSON.parse(
+          document.getElementById("tags").value || "[]",
+        );
+        const tagsInput = document.getElementById("tagsInput");
+        tagsInput.innerHTML = `
+                ${currentTags
+                  .map(
+                    (t) => `
+                    <span class="tag">
+                        ${t}
+                        <button type="button" class="tag-remove" onclick="removeTag('${t}')">✕</button>
+                    </span>
+                `,
+                  )
+                  .join("")}
+                <input type="text" id="tagInput" placeholder="輸入標籤後按 Enter..." onkeypress="handleTagInput(event)">
+            `;
+      }
+
+      // 插入 HTML 標籤
+      function insertTag(openTag, closeTag) {
+        const textarea = document.getElementById("content");
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = textarea.value.substring(start, end) || "選定內容";
+        const before = textarea.value.substring(0, start);
+        const after = textarea.value.substring(end);
+
+        textarea.value = before + openTag + selectedText + closeTag + after;
+        textarea.focus();
+        textarea.selectionStart = start + openTag.length;
+        textarea.selectionEnd = start + openTag.length + selectedText.length;
+      }
+
+      // 保存文章
+      document
+        .getElementById("editForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const articleData = {
+            title: document.getElementById("title").value,
+            category: document.getElementById("category").value,
+            excerpt: document.getElementById("excerpt").value,
+            date: document.getElementById("date").value,
+            readTime: document.getElementById("readTime").value,
+            tags: JSON.parse(document.getElementById("tags").value || "[]"),
+            content: document.getElementById("content").value,
+          };
+
+          try {
+            let response;
+            if (currentArticle) {
+              response = await fetch(
+                `${API_URL}/articles/${currentArticle.id}`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(articleData),
+                },
+              );
+            } else {
+              response = await fetch(`${API_URL}/articles`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(articleData),
+              });
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
+              showMessage(result.message, "success");
+              await loadArticles();
+              if (!currentArticle) {
+                currentArticle = result.data;
+                renderArticlesList();
+              }
+            } else {
+              showMessage(result.message, "error");
+            }
+          } catch (error) {
+            console.error("保存失敗:", error);
+            showMessage("保存失敗，請檢查網路連接", "error");
+          }
+        });
+
+      // 刪除文章
+      async function deleteArticle() {
+        if (!currentArticle || !confirm("確定要刪除此文章嗎？")) return;
+
+        try {
+          const response = await fetch(
+            `${API_URL}/articles/${currentArticle.id}`,
+            {
+              method: "DELETE",
+            },
+          );
+
+          const result = await response.json();
+
+          if (result.success) {
+            showMessage("文章已刪除", "success");
+            currentArticle = null;
+            await loadArticles();
+            resetForm();
+          } else {
+            showMessage(result.message, "error");
+          }
+        } catch (error) {
+          console.error("刪除失敗:", error);
+          showMessage("刪除失敗", "error");
+        }
+      }
+
+      // 重置表單
+      function resetForm() {
+        document.getElementById("editForm").reset();
+        document.getElementById("tags").value = "[]";
+        document.getElementById("tagsInput").innerHTML =
+          '<input type="text" id="tagInput" placeholder="輸入標籤後按 Enter..." onkeypress="handleTagInput(event)">';
+        document.getElementById("emptyState").style.display = "block";
+        document.getElementById("editForm").style.display = "none";
+        renderArticlesList();
+      }
+
+      // 顯示消息
+      function showMessage(text, type) {
+        const box = document.getElementById("messageBox");
+        const msg = document.createElement("div");
+        msg.className = `message ${type}`;
+        msg.textContent = text;
+        box.appendChild(msg);
+
+        setTimeout(() => msg.remove(), 3000);
+      }
+
+      // 頁面載入時初始化
+      window.addEventListener("load", init);
+    </script>
+  </body>
+</html>
