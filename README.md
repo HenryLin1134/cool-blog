@@ -1,5 +1,7 @@
 # 🤖 Cool Blog - AI Generated Experimental Project
 
+English | [繁體中文](README.zh-TW.md)
+
 > ⚠️ **THIS IS AN AI-GENERATED EXPERIMENTAL PROJECT**
 >
 > This project was created entirely by AI agents to test and demonstrate the capabilities of:
