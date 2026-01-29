@@ -1,13 +1,15 @@
 # 🤖 Cool Blog - AI Generated Experimental Project
 
 > ⚠️ **THIS IS AN AI-GENERATED EXPERIMENTAL PROJECT**
-> 
+>
 > This project was created entirely by AI agents to test and demonstrate the capabilities of:
+>
 > - GitHub Copilot Custom Agents (Web Creator Mode)
 > - Multi-Agent AI Orchestration
 > - Automated Full-Stack Development Workflows
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://YOUR_USERNAME.github.io/cool-blog)
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://henrylin1134.github.io/cool-blog)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black)](https://github.com/HenryLin1134/cool-blog)
 [![AI Generated](https://img.shields.io/badge/AI-Generated-blue)](https://github.com/features/copilot)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -20,6 +22,7 @@
 ### ✨ Features
 
 #### Frontend
+
 - 🎨 Modern, responsive design with dark/light themes
 - 💫 Smooth animations and particle effects
 - 📱 Mobile-first responsive layout
@@ -28,6 +31,7 @@
 - 🚀 Optimized performance
 
 #### Backend
+
 - 🔌 RESTful API built with Express.js
 - 📝 Full CRUD operations for articles
 - 💾 JSON-based data persistence
@@ -35,6 +39,7 @@
 - 📊 6 pre-loaded sample articles
 
 #### Admin Editor
+
 - ✏️ Create, edit, delete articles
 - 🏷️ Tag management system
 - 📂 Category organization
@@ -47,6 +52,7 @@
 ## 🤖 AI Generation Details
 
 ### Agent System Used
+
 - **Primary Agent**: Web Creator (GitHub Copilot Custom Agent)
 - **Mode**: Multi-agent orchestration
 - **Agents Involved**:
@@ -57,6 +63,7 @@
   - ✨ Enhancement Agent - Feature optimization
 
 ### What AI Created
+
 - ✅ Complete HTML structure (480 lines)
 - ✅ Full CSS styling (1,591 lines)
 - ✅ JavaScript functionality (877 lines)
@@ -68,6 +75,7 @@
 - ✅ Git repository setup
 
 ### Total Code Generated
+
 - **Lines of Code**: ~3,000+
 - **Files Created**: 15+
 - **Documentation**: 5 comprehensive guides
@@ -78,6 +86,7 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 14+
 - npm or yarn
 
@@ -85,7 +94,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/cool-blog.git
+git clone https://github.com/HenryLin1134/cool-blog.git
 cd cool-blog
 
 # Install dependencies
@@ -97,10 +106,10 @@ npm start
 
 ### Access the Application
 
-| Application | URL | Description |
-|-------------|-----|-------------|
-| 🌐 Frontend | http://localhost:3001 | Public blog website |
-| ✏️ Admin | http://localhost:3001/admin.html | Article management |
+| Application | URL                              | Description         |
+| ----------- | -------------------------------- | ------------------- |
+| 🌐 Frontend | http://localhost:3001            | Public blog website |
+| ✏️ Admin    | http://localhost:3001/admin.html | Article management  |
 
 ---
 
@@ -169,13 +178,16 @@ curl -X POST http://localhost:3001/api/articles \
 ## 🧪 Experimental Nature
 
 ### Purpose
+
 This project serves as a **proof of concept** for:
+
 1. **AI-Driven Development** - Can AI agents build complete applications?
 2. **Multi-Agent Collaboration** - How well do specialized agents work together?
 3. **Code Quality** - Does AI-generated code meet professional standards?
 4. **Full-Stack Automation** - Can AI handle both frontend and backend?
 
 ### Limitations
+
 - ⚠️ No user authentication (development only)
 - ⚠️ JSON file storage (not production-ready)
 - ⚠️ Basic security measures
@@ -183,6 +195,7 @@ This project serves as a **proof of concept** for:
 - ⚠️ No comprehensive test suite
 
 ### Future Improvements
+
 - [ ] Add user authentication system
 - [ ] Migrate to database (MongoDB/PostgreSQL)
 - [ ] Implement image upload
@@ -196,18 +209,21 @@ This project serves as a **proof of concept** for:
 ## 🛠️ Technology Stack
 
 ### Backend
+
 - **Express.js** - Web framework
 - **CORS** - Cross-origin support
 - **Body-parser** - Request parsing
 - **Node.js** - Runtime environment
 
 ### Frontend
+
 - **HTML5** - Semantic markup
 - **CSS3** - Modern styling (Grid, Flexbox, Variables)
 - **Vanilla JavaScript** - No frameworks
 - **Fetch API** - Async data communication
 
 ### Storage
+
 - **JSON Files** - Simple data persistence
 
 ---
@@ -225,24 +241,28 @@ Comprehensive guides are available:
 ## 🔬 AI Agent Capabilities Demonstrated
 
 ### Planning & Architecture
+
 - ✅ System design decisions
 - ✅ Technology stack selection
 - ✅ File structure organization
 - ✅ API endpoint planning
 
 ### Code Implementation
+
 - ✅ Clean, readable code
 - ✅ Proper code organization
 - ✅ Consistent styling
 - ✅ Best practices adherence
 
 ### Documentation
+
 - ✅ Comprehensive README
 - ✅ API documentation
 - ✅ Setup guides
 - ✅ Code comments
 
 ### Problem Solving
+
 - ✅ Bug fixing (CSS syntax errors)
 - ✅ Feature additions (modal conversion)
 - ✅ Integration (frontend + backend)
@@ -253,6 +273,7 @@ Comprehensive guides are available:
 ## 📊 Statistics
 
 ### Code Metrics
+
 - **Total Lines**: ~3,000+
 - **HTML**: 480 lines
 - **CSS**: 1,591 lines
@@ -260,6 +281,7 @@ Comprehensive guides are available:
 - **Documentation**: 5 files
 
 ### Features Implemented
+
 - ✅ 6 major sections (Hero, About, Blog, Projects, Contact, Footer)
 - ✅ 8 specialized components
 - ✅ 5 API endpoints
@@ -268,6 +290,7 @@ Comprehensive guides are available:
 - ✅ Responsive design (3 breakpoints)
 
 ### Development Time
+
 - **Planning**: ~5 minutes
 - **Implementation**: ~20 minutes
 - **Testing & Fixes**: ~5 minutes
@@ -319,4 +342,4 @@ While this is an AI-generated experimental project, contributions are welcome:
 
 **Created with 🤖 by AI Agents | Powered by GitHub Copilot**
 
-*This README itself was also generated by AI to document the AI-generated project. Meta! 🎭*
+_This README itself was also generated by AI to document the AI-generated project. Meta! 🎭_
