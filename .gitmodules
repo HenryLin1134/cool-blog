@@ -1,0 +1,4 @@
+[submodule ".github"]
+	path = .github
+	url = https://github.com/HenryLin1134/web-dev-agent-toolkit.git
+	url = https://github.com/HenryLin1134/web-dev-agent-toolkit.git
