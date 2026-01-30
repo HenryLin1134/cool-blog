@@ -8,8 +8,468 @@
 // ============================================
 let currentTheme = localStorage.getItem("theme") || "light";
 let typingIndex = 0;
-let typingNames = ["開發者", "設計師", "創作者", "學習者"];
+let typingNames = [];
 let currentNameIndex = 0;
+let typingSession = 0;
+let currentLanguage =
+  localStorage.getItem("language") || getPreferredLanguage();
+const SUPPORTED_LANGUAGES = ["zh-TW", "en", "ja"];
+const MAX_HOME_ARTICLES = 6; // 首頁最多顯示6篇文章
+const DATE_LOCALES = {
+  "zh-TW": "zh-TW",
+  en: "en-US",
+  ja: "ja-JP",
+};
+
+const I18N = {
+  "zh-TW": {
+    meta: {
+      title: "Cool Blog - 我的酷炫部落格",
+      description: "一個很酷的個人部落格 - 分享技術、生活與創意",
+    },
+    nav: {
+      home: "首頁",
+      about: "關於我",
+      blog: "部落格",
+      projects: "作品集",
+      contact: "聯絡",
+      login: "登入",
+      language: "語言",
+      toggleMenu: "切換選單",
+      toggleTheme: "切換主題",
+    },
+    hero: {
+      greeting: "嗨！我是",
+      subtitle: "全端開發者 | 設計愛好者 | 終身學習者",
+      description:
+        "專注於創造美觀、高效且用戶友好的網頁應用程式。 熱愛探索新技術，分享知識與經驗。",
+      ctaPrimary: "探索文章",
+      ctaSecondary: "聯絡我",
+      scroll: "向下滾動",
+      typingNames: ["開發者", "設計師", "創作者", "學習者"],
+    },
+    about: {
+      title: "關於我",
+      subtitle: "熱情 | 創新 | 追求卓越",
+      cards: {
+        mission: {
+          title: "我的使命",
+          body: "透過程式碼創造價值，用技術解決實際問題，讓世界變得更美好。",
+        },
+        vision: {
+          title: "我的理念",
+          body: "保持好奇心，永不停止學習。相信技術可以改變生活，設計能傳遞情感。",
+        },
+        goal: {
+          title: "我的目標",
+          body: "成為一名優秀的全端開發者，打造令人驚艷的產品，影響更多人。",
+        },
+      },
+      skillsTitle: "技能專長",
+      skills: {
+        frontend: "前端開發",
+        backend: "後端開發",
+        design: "UI/UX 設計",
+        cloud: "雲端服務",
+      },
+    },
+    blog: {
+      title: "最新文章",
+      subtitle: "分享技術心得與生活感悟",
+      loadMore: "載入更多文章",
+    },
+    allArticles: {
+      meta: {
+        title: "所有文章 - Cool Blog",
+        description: "瀏覽所有文章 - Cool Blog",
+      },
+      pageTitle: "所有文章",
+      pageSubtitle: "探索我的所有創作與分享",
+      filterByCategory: "分類：",
+      allCategories: "全部",
+      category: {
+        tech: "技術",
+        tutorial: "教學",
+        life: "生活",
+      },
+      sortBy: "排序：",
+      sort: {
+        newest: "最新",
+        oldest: "最舊",
+        title: "標題",
+      },
+      noArticles: "沒有找到符合條件的文章",
+    },
+    article: {
+      backToList: "返回文章列表",
+      loading: "載入中...",
+      notFound: "找不到這篇文章",
+      share: "分享這篇文章",
+      copyLink: "複製連結",
+    },
+    modal: {
+      close: "關閉",
+      shareTitle: "分享這篇文章",
+      shareTwitter: "分享到 Twitter",
+      shareFacebook: "分享到 Facebook",
+      shareLinkedIn: "分享到 LinkedIn",
+      copyLink: "複製連結",
+      copyLinkText: "複製連結",
+      prev: "← 上一篇",
+      next: "下一篇 →",
+      twitter: "Twitter",
+      facebook: "Facebook",
+      linkedin: "LinkedIn",
+    },
+    projects: {
+      title: "精選作品",
+      subtitle: "用心打造的專案",
+      viewDemo: "查看展示",
+      viewCode: "查看程式碼",
+      items: {
+        commerce: {
+          title: "電商平台",
+          body: "功能完整的線上購物平台，包含商品管理、購物車、訂單系統等功能。",
+        },
+        taskApp: {
+          title: "任務管理 App",
+          body: "簡潔易用的任務管理應用，支援雲端同步與多人協作。",
+        },
+        designSystem: {
+          title: "設計系統",
+          body: "為企業打造的完整設計系統，包含組件庫、設計規範與文檔。",
+        },
+      },
+    },
+    contact: {
+      title: "保持聯繫",
+      subtitle: "很樂意與你交流",
+      email: "Email",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      linkedinName: "你的名字",
+      twitter: "Twitter",
+    },
+    form: {
+      name: "你的名字",
+      email: "你的 Email",
+      message: "想說的話...",
+      submit: "發送訊息",
+      sending: "正在發送訊息...",
+      thanks: "感謝 {name} 的訊息！我會盡快回覆你的 Email ({email})。",
+    },
+    footer: {
+      brand: "用心創造，用愛分享",
+      quickLinks: "快速連結",
+      social: "社群媒體",
+      copyright: "© 2026 Cool Blog. 用 ❤️ 與 ☕ 打造",
+      tech: "使用 HTML, CSS, JavaScript 構建",
+      backToTop: "回到頂部",
+    },
+    alerts: {
+      copyLinkSuccess: "連結已複製到剪貼簿！",
+      shareDemo: "分享到 {platform} (功能示範)",
+    },
+  },
+  en: {
+    meta: {
+      title: "Cool Blog - My Awesome Blog",
+      description: "A cool personal blog sharing tech, life, and creativity",
+    },
+    nav: {
+      home: "Home",
+      about: "About",
+      blog: "Blog",
+      projects: "Projects",
+      contact: "Contact",
+      login: "Login",
+      language: "Language",
+      toggleMenu: "Toggle menu",
+      toggleTheme: "Toggle theme",
+    },
+    hero: {
+      greeting: "Hi! I'm",
+      subtitle: "Full-stack Developer | Design Enthusiast | Lifelong Learner",
+      description:
+        "Focused on building beautiful, efficient, and user-friendly web experiences. I love exploring new tech and sharing what I learn.",
+      ctaPrimary: "Explore Articles",
+      ctaSecondary: "Contact Me",
+      scroll: "Scroll Down",
+      typingNames: ["Developer", "Designer", "Creator", "Learner"],
+    },
+    about: {
+      title: "About Me",
+      subtitle: "Passion | Innovation | Excellence",
+      cards: {
+        mission: {
+          title: "My Mission",
+          body: "Create value through code, solve real problems with technology, and make the world better.",
+        },
+        vision: {
+          title: "My Philosophy",
+          body: "Stay curious and never stop learning. Believe tech changes lives and design conveys emotion.",
+        },
+        goal: {
+          title: "My Goal",
+          body: "Become a great full-stack developer and build delightful products that impact more people.",
+        },
+      },
+      skillsTitle: "Skills",
+      skills: {
+        frontend: "Frontend Development",
+        backend: "Backend Development",
+        design: "UI/UX Design",
+        cloud: "Cloud Services",
+      },
+    },
+    blog: {
+      title: "Latest Articles",
+      subtitle: "Sharing tech insights and life reflections",
+      loadMore: "Load More",
+    },
+    allArticles: {
+      meta: {
+        title: "All Articles - Cool Blog",
+        description: "Browse all articles - Cool Blog",
+      },
+      pageTitle: "All Articles",
+      pageSubtitle: "Explore all my creations and insights",
+      filterByCategory: "Category:",
+      allCategories: "All",
+      category: {
+        tech: "Tech",
+        tutorial: "Tutorial",
+        life: "Life",
+      },
+      sortBy: "Sort by:",
+      sort: {
+        newest: "Newest",
+        oldest: "Oldest",
+        title: "Title",
+      },
+      noArticles: "No articles found matching the criteria",
+    },
+    article: {
+      backToList: "Back to Articles",
+      loading: "Loading...",
+      notFound: "Article not found",
+      share: "Share this article",
+      copyLink: "Copy Link",
+    },
+    modal: {
+      close: "Close",
+      shareTitle: "Share this article",
+      shareTwitter: "Share to Twitter",
+      shareFacebook: "Share to Facebook",
+      shareLinkedIn: "Share to LinkedIn",
+      copyLink: "Copy link",
+      copyLinkText: "Copy Link",
+      prev: "← Previous",
+      next: "Next →",
+      twitter: "Twitter",
+      facebook: "Facebook",
+      linkedin: "LinkedIn",
+    },
+    projects: {
+      title: "Featured Projects",
+      subtitle: "Carefully crafted works",
+      viewDemo: "View demo",
+      viewCode: "View code",
+      items: {
+        commerce: {
+          title: "E-commerce Platform",
+          body: "A full-featured online store with product management, cart, and orders.",
+        },
+        taskApp: {
+          title: "Task Manager App",
+          body: "A clean task manager with cloud sync and team collaboration.",
+        },
+        designSystem: {
+          title: "Design System",
+          body: "A comprehensive design system with components, guidelines, and docs.",
+        },
+      },
+    },
+    contact: {
+      title: "Get in Touch",
+      subtitle: "Happy to connect with you",
+      email: "Email",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      linkedinName: "Your Name",
+      twitter: "Twitter",
+    },
+    form: {
+      name: "Your Name",
+      email: "Your Email",
+      message: "Your message...",
+      submit: "Send Message",
+      sending: "Sending message...",
+      thanks: "Thanks {name}! I'll reply to your email soon ({email}).",
+    },
+    footer: {
+      brand: "Crafted with care, shared with love",
+      quickLinks: "Quick Links",
+      social: "Social",
+      copyright: "© 2026 Cool Blog. Built with ❤️ and ☕",
+      tech: "Built with HTML, CSS, JavaScript",
+      backToTop: "Back to top",
+    },
+    alerts: {
+      copyLinkSuccess: "Link copied to clipboard!",
+      shareDemo: "Share to {platform} (demo)",
+    },
+  },
+  ja: {
+    meta: {
+      title: "Cool Blog - 私のクールなブログ",
+      description: "技術・生活・創造性を共有するクールな個人ブログ",
+    },
+    nav: {
+      home: "ホーム",
+      about: "私について",
+      blog: "ブログ",
+      projects: "作品集",
+      contact: "連絡先",
+      login: "ログイン",
+      language: "言語",
+      toggleMenu: "メニューを切り替え",
+      toggleTheme: "テーマを切り替え",
+    },
+    hero: {
+      greeting: "こんにちは、私は",
+      subtitle: "フルスタック開発者 | デザイン愛好家 | 生涯学習者",
+      description:
+        "美しく効率的で使いやすいWeb体験の創造に集中しています。新技術の探求と共有が大好きです。",
+      ctaPrimary: "記事を見る",
+      ctaSecondary: "連絡する",
+      scroll: "下へスクロール",
+      typingNames: ["開発者", "デザイナー", "クリエイター", "学習者"],
+    },
+    about: {
+      title: "私について",
+      subtitle: "情熱 | 革新 | 卓越",
+      cards: {
+        mission: {
+          title: "私の使命",
+          body: "コードで価値を生み、技術で課題を解決し、世界をより良くします。",
+        },
+        vision: {
+          title: "私の信念",
+          body: "好奇心を持ち続け、学びを止めない。技術は生活を変え、デザインは感情を伝えます。",
+        },
+        goal: {
+          title: "私の目標",
+          body: "優れたフルスタック開発者として、驚きのあるプロダクトを作り多くの人に影響を与えること。",
+        },
+      },
+      skillsTitle: "スキル",
+      skills: {
+        frontend: "フロントエンド開発",
+        backend: "バックエンド開発",
+        design: "UI/UX デザイン",
+        cloud: "クラウドサービス",
+      },
+    },
+    blog: {
+      title: "最新記事",
+      subtitle: "技術の気づきと日常の記録",
+      loadMore: "もっと読む",
+    },
+    allArticles: {
+      meta: {
+        title: "すべての記事 - Cool Blog",
+        description: "すべての記事を閲覧 - Cool Blog",
+      },
+      pageTitle: "すべての記事",
+      pageSubtitle: "私のすべての作品と洞察を探索",
+      filterByCategory: "カテゴリ：",
+      allCategories: "すべて",
+      category: {
+        tech: "技術",
+        tutorial: "チュートリアル",
+        life: "生活",
+      },
+      sortBy: "並び替え：",
+      sort: {
+        newest: "最新",
+        oldest: "最古",
+        title: "タイトル",
+      },
+      noArticles: "条件に一致する記事が見つかりません",
+    },
+    article: {
+      backToList: "記事一覧に戻る",
+      loading: "読み込み中...",
+      notFound: "記事が見つかりません",
+      share: "この記事を共有",
+      copyLink: "リンクをコピー",
+    },
+    modal: {
+      close: "閉じる",
+      shareTitle: "この記事を共有",
+      shareTwitter: "Twitterで共有",
+      shareFacebook: "Facebookで共有",
+      shareLinkedIn: "LinkedInで共有",
+      copyLink: "リンクをコピー",
+      copyLinkText: "リンクをコピー",
+      prev: "← 前の記事",
+      next: "次の記事 →",
+      twitter: "Twitter",
+      facebook: "Facebook",
+      linkedin: "LinkedIn",
+    },
+    projects: {
+      title: "注目プロジェクト",
+      subtitle: "心を込めた制作物",
+      viewDemo: "デモを見る",
+      viewCode: "コードを見る",
+      items: {
+        commerce: {
+          title: "ECプラットフォーム",
+          body: "商品管理、カート、注文機能を備えたオンラインストア。",
+        },
+        taskApp: {
+          title: "タスク管理アプリ",
+          body: "シンプルなタスク管理。クラウド同期と共同作業に対応。",
+        },
+        designSystem: {
+          title: "デザインシステム",
+          body: "コンポーネントとガイドラインを備えた包括的なデザインシステム。",
+        },
+      },
+    },
+    contact: {
+      title: "お問い合わせ",
+      subtitle: "お気軽にご連絡ください",
+      email: "メール",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      linkedinName: "お名前",
+      twitter: "Twitter",
+    },
+    form: {
+      name: "お名前",
+      email: "メールアドレス",
+      message: "メッセージ...",
+      submit: "送信する",
+      sending: "送信中...",
+      thanks: "{name} さん、ありがとうございます。後ほど {email} に返信します。",
+    },
+    footer: {
+      brand: "心を込めて作り、愛を込めて共有",
+      quickLinks: "クイックリンク",
+      social: "ソーシャル",
+      copyright: "© 2026 Cool Blog. ❤️ と ☕ で作成",
+      tech: "HTML / CSS / JavaScript で構築",
+      backToTop: "トップへ戻る",
+    },
+    alerts: {
+      copyLinkSuccess: "リンクをコピーしました！",
+      shareDemo: "{platform} に共有（デモ）",
+    },
+  },
+};
 
 // API 配置
 const API_URL = "http://localhost:3001/api";
@@ -300,6 +760,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // 初始化應用
 // ============================================
 async function initializeApp() {
+  // 初始化語言
+  initLanguage();
+
   // 初始化主題
   initTheme();
 
@@ -331,6 +794,100 @@ async function initializeApp() {
   setTimeout(() => {
     document.getElementById("preloader").classList.add("hidden");
   }, 1000);
+}
+
+// ============================================
+// 語言切換
+// ============================================
+function getPreferredLanguage() {
+  const browserLang = (navigator.language || "").toLowerCase();
+  if (browserLang.startsWith("zh")) return "zh-TW";
+  if (browserLang.startsWith("ja")) return "ja";
+  if (browserLang.startsWith("en")) return "en";
+  return "zh-TW";
+}
+
+function initLanguage() {
+  const langSelect = document.getElementById("langSelect");
+  const initialLang = SUPPORTED_LANGUAGES.includes(currentLanguage)
+    ? currentLanguage
+    : "zh-TW";
+
+  setLanguage(initialLang, false, false);
+
+  if (langSelect) {
+    langSelect.value = initialLang;
+    langSelect.addEventListener("change", (event) => {
+      setLanguage(event.target.value);
+    });
+  }
+}
+
+function setLanguage(lang, persist = true, restartTyping = true) {
+  const normalizedLang = SUPPORTED_LANGUAGES.includes(lang) ? lang : "zh-TW";
+  currentLanguage = normalizedLang;
+  document.documentElement.lang = normalizedLang;
+
+  if (persist) {
+    localStorage.setItem("language", normalizedLang);
+  }
+
+  typingNames = getTypingNames();
+  typingIndex = 0;
+  currentNameIndex = 0;
+
+  translatePage();
+  if (restartTyping) {
+    startTyping();
+  }
+}
+
+function getTypingNames() {
+  const names = I18N?.[currentLanguage]?.hero?.typingNames;
+  return Array.isArray(names) && names.length > 0
+    ? names
+    : I18N["zh-TW"].hero.typingNames;
+}
+
+function translatePage() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.textContent = t(el.dataset.i18n);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder));
+  });
+
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+    el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel));
+  });
+
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    el.textContent = t(el.dataset.i18nTitle);
+  });
+
+  document.querySelectorAll("[data-i18n-content]").forEach((el) => {
+    el.setAttribute("content", t(el.dataset.i18nContent));
+  });
+}
+
+function t(key, params = {}) {
+  const path = key.split(".");
+  let value = I18N?.[currentLanguage];
+  for (const segment of path) {
+    value = value?.[segment];
+  }
+
+  const fallbackValue = (() => {
+    let fallback = I18N?.["zh-TW"];
+    for (const segment of path) {
+      fallback = fallback?.[segment];
+    }
+    return fallback;
+  })();
+
+  const text = typeof value === "string" ? value : fallbackValue || key;
+  return text.replace(/\{(\w+)\}/g, (_, token) => params[token] ?? "");
 }
 
 // ============================================
@@ -391,25 +948,33 @@ function initNavigation() {
   // 平滑滾動與選單高亮
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault();
       const targetId = link.getAttribute("href");
-      const targetSection = document.querySelector(targetId);
+      
+      // 只處理錨點連結（以 # 開頭），其他連結保持正常行為
+      if (targetId && targetId.startsWith("#")) {
+        e.preventDefault();
+        const targetSection = document.querySelector(targetId);
 
-      if (targetSection) {
-        // 關閉手機版選單
+        if (targetSection) {
+          // 關閉手機版選單
+          navToggle?.classList.remove("active");
+          navMenu?.classList.remove("active");
+
+          // 滾動到目標區塊
+          const offsetTop = targetSection.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: "smooth",
+          });
+
+          // 更新活動連結
+          navLinks.forEach((l) => l.classList.remove("active"));
+          link.classList.add("active");
+        }
+      } else {
+        // 外部連結（如 login.html）自動關閉手機版選單
         navToggle?.classList.remove("active");
         navMenu?.classList.remove("active");
-
-        // 滾動到目標區塊
-        const offsetTop = targetSection.offsetTop - 80;
-        window.scrollTo({
-          top: offsetTop,
-          behavior: "smooth",
-        });
-
-        // 更新活動連結
-        navLinks.forEach((l) => l.classList.remove("active"));
-        link.classList.add("active");
       }
     });
   });
@@ -466,39 +1031,50 @@ async function loadArticlesFromAPI() {
 // ============================================
 function initHero() {
   // 打字效果
-  typeText();
+  startTyping();
 }
 
-function typeText() {
+function startTyping() {
+  typingSession += 1;
+  const typingElement = document.getElementById("typingText");
+  if (typingElement) {
+    typingElement.textContent = "";
+  }
+  typeText(typingSession);
+}
+
+function typeText(sessionId) {
   const typingElement = document.getElementById("typingText");
   if (!typingElement) return;
+  if (sessionId !== typingSession) return;
 
   const currentName = typingNames[currentNameIndex];
 
   if (typingIndex < currentName.length) {
     typingElement.textContent = currentName.substring(0, typingIndex + 1);
     typingIndex++;
-    setTimeout(typeText, 150);
+    setTimeout(() => typeText(sessionId), 150);
   } else {
     setTimeout(() => {
-      eraseText();
+      eraseText(sessionId);
     }, 2000);
   }
 }
 
-function eraseText() {
+function eraseText(sessionId) {
   const typingElement = document.getElementById("typingText");
   if (!typingElement) return;
+  if (sessionId !== typingSession) return;
 
   const currentName = typingNames[currentNameIndex];
 
   if (typingIndex > 0) {
     typingElement.textContent = currentName.substring(0, typingIndex - 1);
     typingIndex--;
-    setTimeout(eraseText, 100);
+    setTimeout(() => eraseText(sessionId), 100);
   } else {
     currentNameIndex = (currentNameIndex + 1) % typingNames.length;
-    setTimeout(typeText, 500);
+    setTimeout(() => typeText(sessionId), 500);
   }
 }
 
@@ -547,17 +1123,20 @@ function renderBlogArticles() {
 
   blogGrid.innerHTML = "";
 
-  const articlesToShow = blogArticles.slice(0, displayedArticles);
+  // 首頁只顯示最新的 MAX_HOME_ARTICLES 篇文章
+  const maxArticles = Math.min(MAX_HOME_ARTICLES, blogArticles.length);
+  const articlesToShow = blogArticles.slice(0, Math.min(displayedArticles, maxArticles));
 
   articlesToShow.forEach((article) => {
     const articleCard = createBlogCard(article);
     blogGrid.appendChild(articleCard);
   });
 
-  // 隱藏載入更多按鈕如果已顯示所有文章
+  // 隱藏載入更多按鈕如果已顯示所有文章或達到最大顯示數
   const loadMoreBtn = document.getElementById("loadMoreBtn");
   if (loadMoreBtn) {
-    if (displayedArticles >= blogArticles.length) {
+    const maxArticles = Math.min(MAX_HOME_ARTICLES, blogArticles.length);
+    if (displayedArticles >= maxArticles) {
       loadMoreBtn.style.display = "none";
     } else {
       loadMoreBtn.style.display = "inline-flex";
@@ -587,7 +1166,7 @@ function createBlogCard(article) {
                     ${article.readTime}
                 </span>
             </div>
-            <h3>${article.title}</h3>
+            <h3 class="article-card-title" style="cursor: pointer;">${article.title}</h3>
             <p class="blog-excerpt">${article.excerpt}</p>
             <div class="blog-tags">
                 ${article.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
@@ -595,9 +1174,24 @@ function createBlogCard(article) {
         </div>
     `;
 
-  card.addEventListener("click", () => {
-    showArticleDetail(article.id);
+  // 點擊卡片主體打開 modal
+  card.addEventListener("click", (e) => {
+    // 如果點擊的是標題，則跳轉到文章頁面
+    if (e.target.classList.contains("article-card-title")) {
+      window.location.href = `article.html?id=${article.id}`;
+    } else {
+      showArticleDetail(article.id);
+    }
   });
+
+  // 為標題添加額外的點擊事件處理
+  const titleElement = card.querySelector(".article-card-title");
+  if (titleElement) {
+    titleElement.addEventListener("click", (e) => {
+      e.stopPropagation();
+      window.location.href = `article.html?id=${article.id}`;
+    });
+  }
 
   return card;
 }
@@ -699,7 +1293,7 @@ function initArticleDetailControls() {
     copyLinkBtn.addEventListener("click", () => {
       const url = window.location.href;
       navigator.clipboard.writeText(url).then(() => {
-        alert("連結已複製到剪貼簿！");
+        alert(t("alerts.copyLinkSuccess"));
       });
     });
   }
@@ -710,8 +1304,10 @@ function initArticleDetailControls() {
     if (btn.id === "copyLinkBtn") return; // 已處理
 
     btn.addEventListener("click", () => {
-      const platform = btn.textContent.trim();
-      alert(`分享到 ${platform} (功能示範)`);
+      const platformLabel =
+        btn.querySelector("[data-i18n]")?.textContent?.trim() ||
+        btn.textContent.trim();
+      alert(t("alerts.shareDemo", { platform: platformLabel }));
     });
   });
 }
@@ -732,12 +1328,12 @@ function handleFormSubmit(e) {
   const message = document.getElementById("message").value;
 
   // 模擬表單提交
-  formMessage.textContent = "正在發送訊息...";
+  formMessage.textContent = t("form.sending");
   formMessage.className = "form-message";
   formMessage.style.display = "block";
 
   setTimeout(() => {
-    formMessage.textContent = `感謝 ${name} 的訊息！我會盡快回覆你的 Email (${email})。`;
+    formMessage.textContent = t("form.thanks", { name, email });
     formMessage.className = "form-message success";
 
     // 清空表單
@@ -805,7 +1401,8 @@ function initScrollAnimations() {
 // 格式化日期
 function formatDate(dateString) {
   const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(dateString).toLocaleDateString("zh-TW", options);
+  const locale = DATE_LOCALES[currentLanguage] || "zh-TW";
+  return new Date(dateString).toLocaleDateString(locale, options);
 }
 
 // 平滑滾動到元素

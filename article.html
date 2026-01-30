@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="文章詳情 - Cool Blog"
+      id="articleMetaDescription"
+    />
+    <title id="articlePageTitle">文章 - Cool Blog</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- 頁面載入動畫 -->
+    <div id="preloader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- 導航欄 -->
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="index.html" class="logo">🚀 Cool Blog</a>
+        </div>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+          data-i18n-aria-label="nav.toggleMenu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li>
+            <a href="index.html#home" class="nav-link" data-i18n="nav.home">首頁</a>
+          </li>
+          <li>
+            <a href="index.html#about" class="nav-link" data-i18n="nav.about">關於我</a>
+          </li>
+          <li>
+            <a href="all-articles.html" class="nav-link" data-i18n="nav.blog">部落格</a>
+          </li>
+          <li>
+            <a href="index.html#projects" class="nav-link" data-i18n="nav.projects">作品集</a>
+          </li>
+          <li>
+            <a href="index.html#contact" class="nav-link" data-i18n="nav.contact">聯絡</a>
+          </li>
+          <li>
+            <a href="login.html" class="nav-link" data-i18n="nav.login">登入</a>
+          </li>
+          <li class="lang-switcher">
+            <label class="sr-only" for="langSelect" data-i18n="nav.language">語言</label>
+            <select
+              id="langSelect"
+              class="lang-select"
+              aria-label="語言"
+              data-i18n-aria-label="nav.language"
+            >
+              <option value="zh-TW">繁體中文</option>
+              <option value="en">English</option>
+              <option value="ja">日本語</option>
+            </select>
+          </li>
+          <li>
+            <button
+              class="theme-toggle"
+              id="themeToggle"
+              aria-label="Toggle theme"
+              data-i18n-aria-label="nav.toggleTheme"
+            >
+              <span class="theme-icon">🌙</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- 文章內容區 -->
+    <main class="article-page">
+      <div class="container">
+        <!-- 返回導航 -->
+        <div class="article-nav">
+          <a href="all-articles.html" class="back-link">
+            <span>←</span>
+            <span data-i18n="article.backToList">返回文章列表</span>
+          </a>
+        </div>
+
+        <!-- 文章內容 -->
+        <article class="article-content" id="articleContent">
+          <!-- 文章載入中 -->
+          <div class="article-loading" id="articleLoading">
+            <div class="loader"></div>
+            <p data-i18n="article.loading">載入中...</p>
+          </div>
+
+          <!-- 文章未找到 -->
+          <div class="article-not-found" id="articleNotFound" style="display: none;">
+            <h1>😕</h1>
+            <p data-i18n="article.notFound">找不到這篇文章</p>
+            <a href="all-articles.html" class="btn btn-primary" data-i18n="article.backToList">
+              返回文章列表
+            </a>
+          </div>
+
+          <!-- 實際文章內容將由 JavaScript 動態載入 -->
+          <div id="articleBody" style="display: none;">
+            <!-- 文章標題 -->
+            <header class="article-header">
+              <h1 class="article-title" id="articleTitle"></h1>
+              <div class="article-meta">
+                <span class="article-category" id="articleCategory"></span>
+                <span class="article-date" id="articleDate">
+                  <span>📅</span>
+                  <span id="articleDateText"></span>
+                </span>
+                <span class="article-readtime" id="articleReadTime">
+                  <span>⏱️</span>
+                  <span id="articleReadTimeText"></span>
+                </span>
+              </div>
+              <div class="article-tags" id="articleTags"></div>
+            </header>
+
+            <!-- 文章主體 -->
+            <div class="article-body" id="articleMainContent">
+              <!-- 文章內容 HTML -->
+            </div>
+
+            <!-- 文章分享 -->
+            <footer class="article-footer">
+              <div class="article-share">
+                <h3 data-i18n="article.share">分享這篇文章</h3>
+                <div class="share-buttons">
+                  <button class="share-btn twitter" id="shareTwitter" aria-label="分享到 Twitter">
+                    🐦 Twitter
+                  </button>
+                  <button class="share-btn facebook" id="shareFacebook" aria-label="分享到 Facebook">
+                    📘 Facebook
+                  </button>
+                  <button class="share-btn linkedin" id="shareLinkedIn" aria-label="分享到 LinkedIn">
+                    💼 LinkedIn
+                  </button>
+                  <button class="share-btn copy" id="copyLink" aria-label="複製連結">
+                    🔗 <span data-i18n="article.copyLink">複製連結</span>
+                  </button>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>🚀 Cool Blog</h3>
+            <p data-i18n="footer.brand">用心製作，用愛分享</p>
+          </div>
+          <div class="footer-section">
+            <h4 data-i18n="footer.quickLinks">快速連結</h4>
+            <ul>
+              <li><a href="index.html#home" data-i18n="nav.home">首頁</a></li>
+              <li><a href="index.html#about" data-i18n="nav.about">關於我</a></li>
+              <li><a href="all-articles.html" data-i18n="nav.blog">部落格</a></li>
+              <li><a href="index.html#projects" data-i18n="nav.projects">作品集</a></li>
+              <li><a href="index.html#contact" data-i18n="nav.contact">聯絡</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4 data-i18n="footer.social">社群媒體</h4>
+            <div class="social-links">
+              <a href="#" aria-label="GitHub"><span>💻</span></a>
+              <a href="#" aria-label="Twitter"><span>🐦</span></a>
+              <a href="#" aria-label="LinkedIn"><span>💼</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p data-i18n="footer.copyright">© 2026 Cool Blog. Built with ❤️ and ☕</p>
+          <button class="back-to-top" id="backToTop" aria-label="回到頂部">
+            ↑
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/article.js"></script>
+  </body>
+</html>

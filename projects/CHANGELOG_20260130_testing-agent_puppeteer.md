@@ -1,0 +1,24 @@
+# Changelog
+
+- timestamp: 2026-01-30
+- agent_name: Testing Agent
+- status: completed
+- actions_taken:
+  - 以 Puppeteer 取代 Playwright 測試
+  - 新增 Puppeteer 測試執行器與測試案例
+  - 執行 `npm test` 並全部通過
+- files_modified:
+  - package.json
+  - package-lock.json
+  - tests/run-puppeteer-tests.js
+  - tests/i18n.spec.js
+  - tests/login.spec.js
+  - README.md
+  - README.zh-TW.md
+  - CHANGELOG.md
+  - projects/login-page/test_report.md
+  - projects/login-page/test_results.json
+- next_steps:
+  - 等待使用者驗收
+- issues_found:
+  - 無

@@ -31,6 +31,7 @@ English | [繁體中文](README.zh-TW.md)
 - 🖼️ Article modal display system
 - 🔄 Dynamic theme switcher
 - 🚀 Optimized performance
+- 🔐 Dedicated login page (demo)
 
 #### Backend
 
@@ -112,6 +113,31 @@ npm start
 | ----------- | -------------------------------- | ------------------- |
 | 🌐 Frontend | http://localhost:3001            | Public blog website |
 | ✏️ Admin    | http://localhost:3001/admin.html | Article management  |
+| 🔐 Login    | http://localhost:3001/login.html | Demo login page     |
+
+---
+
+## 🧪 Testing
+
+Run Puppeteer tests:
+
+```bash
+npm test
+```
+
+Screenshots are saved to:
+
+- test-results/puppeteer
+
+Recordings are saved to:
+
+- test-results/puppeteer/videos
+
+To disable recordings:
+
+```bash
+PUPPETEER_RECORDINGS=0 npm test
+```
 
 ---
 
@@ -122,6 +148,7 @@ cool_blog/
 ├── server.js              # Express backend server
 ├── admin.html             # Admin editor interface
 ├── index.html             # Frontend website
+├── login.html             # Login page (demo)
 ├── package.json           # Dependencies
 │
 ├── data/
@@ -133,7 +160,8 @@ cool_blog/
 │   └── themes.css         # Theme variables
 │
 ├── js/
-│   └── main.js            # Frontend logic + API calls
+│   ├── main.js            # Frontend logic + API calls
+│   └── login.js           # Login page interactions
 │
 └── docs/
     ├── BACKEND_SETUP.md
@@ -190,11 +218,11 @@ This project serves as a **proof of concept** for:
 
 ### Limitations
 
-- ⚠️ No user authentication (development only)
+- ⚠️ Login page is demo-only (no real authentication)
 - ⚠️ JSON file storage (not production-ready)
 - ⚠️ Basic security measures
 - ⚠️ Limited error handling
-- ⚠️ No comprehensive test suite
+- ⚠️ Limited test coverage (Puppeteer)
 
 ### Future Improvements
 

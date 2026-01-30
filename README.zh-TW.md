@@ -31,6 +31,7 @@
 - 🖼️ 文章模態展示系統
 - 🔄 動態主題切換器
 - 🚀 優化的效能表現
+- 🔐 專屬登入頁面（示範）
 
 #### 後端
 
@@ -112,6 +113,7 @@ npm start
 | -------- | -------------------------------- | -------------- |
 | 🌐 前端  | http://localhost:3001            | 公開部落格網站 |
 | ✏️ 管理  | http://localhost:3001/admin.html | 文章管理       |
+| 🔐 登入  | http://localhost:3001/login.html | 登入頁面（示範） |
 
 ---
 
@@ -122,6 +124,7 @@ cool_blog/
 ├── server.js              # Express 後端伺服器
 ├── admin.html             # 管理編輯器介面
 ├── index.html             # 前端網站
+├── login.html             # 登入頁面（示範）
 ├── package.json           # 相依套件
 │
 ├── data/
@@ -133,7 +136,8 @@ cool_blog/
 │   └── themes.css         # 主題變數
 │
 ├── js/
-│   └── main.js            # 前端邏輯 + API 呼叫
+│   ├── main.js            # 前端邏輯 + API 呼叫
+│   └── login.js           # 登入頁面互動
 │
 └── docs/
     ├── BACKEND_SETUP.md
@@ -277,6 +281,28 @@ app.use(
 ---
 
 ## 🧪 測試
+
+### 自動化測試
+
+```bash
+npm test
+```
+
+（使用 Puppeteer）
+
+截圖輸出位置：
+
+- test-results/puppeteer
+
+錄影輸出位置：
+
+- test-results/puppeteer/videos
+
+停用錄影：
+
+```bash
+PUPPETEER_RECORDINGS=0 npm test
+```
 
 ### 手動測試
 
