@@ -67,9 +67,9 @@ tools:
 
 ## 🎯 Core Purpose
 
-This is an **Automated Multi-Agent Web Development System** that provides intelligent orchestration of 8 specialized development agents for the complete project lifecycle:
+This is an **Automated Multi-Agent Web Development System** that provides intelligent orchestration of 9 specialized development agents for the complete project lifecycle:
 
-**Planning → Implementation → Testing → Enhancement → Release**
+**Planning → Implementation → QA Testing → Testing → Enhancement → Release**
 
 ## 📊 What This Agent Does
 
@@ -93,25 +93,31 @@ This is an **Automated Multi-Agent Web Development System** that provides intell
    - Integrates modules
    - Manages dependencies
 
-4. **Quality Assurance** 🧪
+4. **QA Testing** 🧑‍💻
+   - Simulates user behavior
+   - Executes automated testing with Puppeteer
+   - Captures screenshots for visual verification
+   - Validates against user requirements
+
+5. **Quality Assurance** 🧪
    - Runs functional tests
    - Executes unit tests
    - Performs integration testing
    - Validates performance
 
-5. **Issue Resolution** 🐛🔧
+6. **Issue Resolution** 🐛🔧
    - Diagnoses problems
    - Analyzes root causes
    - Fixes code issues
    - Verifies solutions
 
-6. **Enhancement & Optimization** ✨
+7. **Enhancement & Optimization** ✨
    - Adds new features
    - Improves user experience
    - Optimizes performance
    - Updates documentation
 
-7. **Release Management** 🚀
+8. **Release Management** 🚀
    - Manages versions
    - Prepares deployment
    - Creates release notes
@@ -209,13 +215,14 @@ affected_files: [relevant files]
 
 ## 🔧 Available Tools
 
-### 8 Specialized Agents
+### 9 Specialized Agents
 
 | Agent                | Emoji | Role            | Function                |
 | -------------------- | ----- | --------------- | ----------------------- |
 | Brain Orchestrator   | 🧠    | Coordinator     | Manages entire workflow |
 | Planning Agent       | 📋    | Planner         | Requirements & design   |
 | Implementation Agent | 💻    | Developer       | Code generation         |
+| QA Testing Agent     | 🧑‍💻   | QA Tester       | User-focused testing    |
 | Testing Agent        | 🧪    | QA Engineer     | Quality assurance       |
 | Debug Agent          | 🐛    | Diagnostician   | Problem analysis        |
 | Fix Agent            | 🔧    | Troubleshooter  | Issue resolution        |
@@ -227,21 +234,21 @@ affected_files: [relevant files]
 ### 1. Standard Development
 
 ```
-Planning → Implementation → Testing → Enhancement → Release
-                              ↓
-                    (if failures) Debug → Fix
+Planning → Implementation → QA Testing → Testing → Enhancement → Release
+                                           ↓
+                          (if failures) Debug → Fix → QA Testing (retry)
 ```
 
 ### 2. Bug Fix
 
 ```
-Debug → Fix → Testing → Release
+Debug → Fix → QA Testing → Testing → Release
 ```
 
 ### 3. Feature Enhancement
 
 ```
-Planning → Enhancement → Testing → Release
+Planning → Enhancement → QA Testing → Testing → Release
 ```
 
 ## 📋 How It Reports Progress
@@ -345,7 +352,7 @@ Check outputs and approve for production deployment
 
 ### Agent Capabilities
 
-- 8 specialized agents
+- 9 specialized agents
 - 3 predefined workflows
 - Automatic error recovery
 - Complete Change Log tracking
